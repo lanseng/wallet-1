@@ -12,9 +12,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yns.wallet.*
+import com.trustwallet.core.HDWallet
 
 class WalletFragment : Fragment(R.layout.fragment_home) {
+    init {
+        System.loadLibrary("TrustWalletCore")
+    }
 
+    private val seedPhrase =
+        "ripple scissors kick mammal hire column oak again sun offer wealth tomorrow wagon turn fatal"
+    private val passphrase = ""
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initView(view)
         adjustStatusBarMargin(view.findViewById(R.id.iv_logo))
@@ -33,6 +40,10 @@ class WalletFragment : Fragment(R.layout.fragment_home) {
         view.findViewById<View>(R.id.tv_receive)
             .setOnClickListener {
                 startActivity(Intent(view.context, ReceiveActivity::class.java))
+            }
+        view.findViewById<View>(R.id.tv_super_loop)
+            .setOnClickListener {
+                val wallet = HDWallet(seedPhrase, passphrase)
             }
 //        view.findViewById<View>(R.id.tv_send)
 //            .setOnClickListener {
