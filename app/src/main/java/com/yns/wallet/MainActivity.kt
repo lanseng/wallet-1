@@ -7,17 +7,24 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.trustwallet.core.HDWallet
 import com.yns.wallet.fragment.MineFragment
 import com.yns.wallet.fragment.WalletFragment
 
 class MainActivity : BaseActivity() {
 
     private lateinit var walletCreateDialog: AlertDialog
+    init {
+        System.loadLibrary("TrustWalletCore")
+    }
 
+    private val seedPhrase =
+        "ripple scissors kick mammal hire column oak again sun offer wealth tomorrow wagon turn fatal"
+    private val passphrase = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val wallet = HDWallet(seedPhrase, passphrase)
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
